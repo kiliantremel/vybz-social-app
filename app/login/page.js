@@ -19,7 +19,7 @@ export default function Login() {
     if (error) {
       alert("Erreur : " + error.message);
     } else {
-      alert("Connexion réussie !");
+     window.location.href = "/dashboard";
     }
 
     setLoading(false);
