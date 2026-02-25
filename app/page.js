@@ -14,3 +14,10 @@ export default function Home() {
     </div>
   );
 }
+import Link from "next/link";
+
+<Link href="/login">
+  <button style={{ marginTop: "20px" }}>
+    Se connecter
+  </button>
+</Link>
