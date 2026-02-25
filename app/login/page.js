@@ -1,16 +1,45 @@
 "use client";
 
 import { useState } from "react";
+import { supabase } from "../../lib/supabase";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function handleLogin() {
+  async function handleLogin() {
     setLoading(true);
-    setTimeout(() => {
-      alert("Connexion simulée !");
-      setLoading(false);
-    }, 1500);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      alert("Erreur : " + error.message);
+    } else {
+      alert("Connexion réussie !");
+    }
+
+    setLoading(false);
+  }
+
+  async function handleSignUp() {
+    setLoading(true);
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      alert("Erreur : " + error.message);
+    } else {
+      alert("Compte créé !");
+    }
+
+    setLoading(false);
   }
 
   return (
@@ -20,12 +49,16 @@ export default function Login() {
       <input
         type="email"
         placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         style={{ display: "block", margin: "10px auto", padding: "8px" }}
       />
 
       <input
         type="password"
         placeholder="Mot de passe"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
         style={{ display: "block", margin: "10px auto", padding: "8px" }}
       />
 
@@ -35,6 +68,14 @@ export default function Login() {
         style={{ marginTop: "15px", padding: "10px 20px" }}
       >
         {loading ? "Connexion..." : "Se connecter"}
+      </button>
+
+      <button
+        onClick={handleSignUp}
+        disabled={loading}
+        style={{ marginTop: "10px", padding: "10px 20px" }}
+      >
+        Créer un compte
       </button>
     </main>
   );
