@@ -17,8 +17,6 @@ export default function Login() {
     });
 
     if (error) {
-      alert("Erreur : " + error.message);
-    } else {
      window.location.href = "/dashboard";
     }
 
