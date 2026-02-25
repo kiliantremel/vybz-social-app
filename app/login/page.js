@@ -16,9 +16,22 @@ export default function Login() {
       password,
     });
 
-    if (error) {
-     window.location.href = "/dashboard";
-    }
+    async function handleLogin() {
+  setLoading(true);
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    alert("Erreur : " + error.message);
+  } else {
+    window.location.href = "/dashboard";
+  }
+
+  setLoading(false);
+}
 
     setLoading(false);
   }
